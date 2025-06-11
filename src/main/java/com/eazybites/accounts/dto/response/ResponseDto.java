@@ -1,4 +1,4 @@
-package com.eazybites.accounts.dto;
+package com.eazybites.accounts.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

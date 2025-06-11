@@ -1,4 +1,4 @@
-package com.eazybites.accounts.dto;
+package com.eazybites.accounts.dto.request;
 
 import lombok.Data;
 

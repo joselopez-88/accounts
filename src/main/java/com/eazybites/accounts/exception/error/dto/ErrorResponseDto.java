@@ -1,4 +1,4 @@
-package com.eazybites.accounts.dto;
+package com.eazybites.accounts.exception.error.dto;
 
 import java.time.LocalDateTime;
 
