@@ -1,6 +1,6 @@
 package com.eazybites.accounts.service;
 
-import com.eazybites.accounts.dto.request.CustomerDto;
+import com.eazybites.accounts.model.dto.request.CustomerDto;
 
 public interface IAccountsService {
  /**

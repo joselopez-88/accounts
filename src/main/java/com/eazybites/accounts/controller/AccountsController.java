@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eazybites.accounts.constants.AccountsConstants;
-import com.eazybites.accounts.dto.request.CustomerDto;
-import com.eazybites.accounts.dto.response.ResponseDto;
+import com.eazybites.accounts.model.dto.request.CustomerDto;
+import com.eazybites.accounts.model.dto.response.ResponseDto;
 import com.eazybites.accounts.service.IAccountsService;
 
 import lombok.RequiredArgsConstructor;

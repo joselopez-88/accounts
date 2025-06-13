@@ -5,11 +5,11 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import com.eazybites.accounts.constants.AccountsConstants;
-import com.eazybites.accounts.dto.request.CustomerDto;
-import com.eazybites.accounts.entity.Accounts;
-import com.eazybites.accounts.entity.Customer;
 import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
 import com.eazybites.accounts.mapper.CustomerMapper;
+import com.eazybites.accounts.model.dto.request.CustomerDto;
+import com.eazybites.accounts.model.entity.Accounts;
+import com.eazybites.accounts.model.entity.Customer;
 import com.eazybites.accounts.repository.AccountsRepository;
 import com.eazybites.accounts.repository.CustomerRepository;
 import com.eazybites.accounts.service.IAccountsService;

@@ -2,8 +2,8 @@ package com.eazybites.accounts.mapper;
 
 import org.mapstruct.Mapper;
 
-import com.eazybites.accounts.dto.request.AccountsDto;
-import com.eazybites.accounts.entity.Accounts;
+import com.eazybites.accounts.model.dto.request.AccountsDto;
+import com.eazybites.accounts.model.entity.Accounts;
 
 @Mapper(componentModel = "spring")
 public interface AccountsMapper {
