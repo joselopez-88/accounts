@@ -2,6 +2,10 @@ package com.eazybites.accounts.model.audit;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
@@ -21,11 +25,15 @@ import lombok.experimental.SuperBuilder;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseAuditableEntity {
     @Column(updatable = false)//Indica que el dato no se guarda en un update, solo en el insert
+    @CreatedDate // Anotaciones necesarias para la auditoría
     private LocalDateTime createdAt;
     @Column(updatable = false)
-    private LocalDateTime createdBy;
+    @CreatedBy // Anotaciones necesarias para la auditoría
+    private String createdBy;
     @Column(insertable = false)//Indica que el dato no se guarda en un insert sino en un update
+    @LastModifiedDate // Anotaciones necesarias para la auditoría
     private LocalDateTime updatedAt;
     @Column(insertable = false)
-    private LocalDateTime updatedBy;
+    @LastModifiedBy // Anotaciones necesarias para la auditoría
+    private String updatedBy;
 }
