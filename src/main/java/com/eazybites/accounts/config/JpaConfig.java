@@ -18,7 +18,7 @@ public class JpaConfig {
         //         .map(authentication -> authentication.getName());
         
         // Proporciona un auditor fijo - solo para pruebas
-        return () -> Optional.of("SISTEMA");
+        return () -> Optional.of("Annonymous");
 
     }
 }
