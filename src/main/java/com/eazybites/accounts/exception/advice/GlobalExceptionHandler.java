@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.eazybites.accounts.exception.dto.BaseErrorResponse;
 import com.eazybites.accounts.exception.dto.ErrorResponse;
 import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
+import com.eazybites.accounts.exception.error.ResourceNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,6 +23,18 @@ public class GlobalExceptionHandler {
             .apiPath(webRequest.getDescription(false))
             .status(HttpStatus.BAD_REQUEST.name())
             .code(HttpStatus.BAD_REQUEST.value())
+            .errorTime(LocalDateTime.now())
+            .message(exception.getMessage())
+            .build();
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public BaseErrorResponse handlerResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest) {
+        return ErrorResponse.builder()
+            .apiPath(webRequest.getDescription(false))
+            .status(HttpStatus.NOT_FOUND.name())
+            .code(HttpStatus.NOT_FOUND.value())
             .errorTime(LocalDateTime.now())
             .message(exception.getMessage())
             .build();
