@@ -1,11 +1,9 @@
 package com.eazybites.accounts.model.dto.request;
 
-import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
-public class CustomerDto {
+public class CustomerRequestDto {
     private String name;
     private String email;
     private String mobileNumber;
