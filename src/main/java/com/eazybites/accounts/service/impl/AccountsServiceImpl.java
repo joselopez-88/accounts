@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 
 import com.eazybites.accounts.constants.AccountsConstants;
 import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
+import com.eazybites.accounts.exception.error.ResourceNotFoundException;
+import com.eazybites.accounts.mapper.AccountsMapper;
 import com.eazybites.accounts.mapper.CustomerMapper;
-import com.eazybites.accounts.model.dto.request.CustomerDto;
+import com.eazybites.accounts.model.dto.request.CustomerRequestDto;
+import com.eazybites.accounts.model.dto.response.AccountResponseDto;
+import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
 import com.eazybites.accounts.model.entity.Accounts;
 import com.eazybites.accounts.model.entity.Customer;
 import com.eazybites.accounts.repository.AccountsRepository;
@@ -22,9 +26,20 @@ public class AccountsServiceImpl implements IAccountsService {
 
     private final AccountsRepository accountsRepository;
     private final CustomerRepository customerRepository;
-    private final CustomerMapper customerMapper;    
+    private final CustomerMapper customerMapper;
+    private final AccountsMapper accountsMapper;
+
+    
+    /**
+     * Create a new customer account.
+     * 
+     * @param customerDto Customer details such as name, email and mobileNumber
+     * 
+     * @throws CustomerAlreadyExistsException if the customer is already registered
+     *                                         with the given mobileNumber
+     */
     @Override
-    public void createAccount(CustomerDto customerDto) {
+    public void createAccount(CustomerRequestDto customerDto) {
         Customer customer = customerMapper.mapToCustomer(customerDto);
         boolean existsMobile = customerRepository.existsByMobileNumber(customer.getMobileNumber());
 
@@ -51,5 +66,30 @@ public class AccountsServiceImpl implements IAccountsService {
         .build();
         
     }
+
+        /**
+         * Fetch customer account details.
+         * 
+         * @param mobileNumber Customer mobileNumber
+         * 
+         * @return Customer account details
+         * 
+         * @throws ResourceNotFoundException if the customer or account is not found
+         *                                     for the given mobileNumber
+         */
+       @Override
+       public CustomerResponseDto fetchAccount(String mobileNumber) {
+        Customer customer = customerRepository
+            .findByMobileNumber(mobileNumber)
+            .orElseThrow( ()-> new ResourceNotFoundException("Customer","mobileNumber ", mobileNumber));   
+        Accounts account = accountsRepository.findByCustomerId(
+                    customer.getCustomerId())
+                    .orElseThrow(
+                        ()-> new ResourceNotFoundException("Account","id ", String.valueOf(customer.getCustomerId())));
+        CustomerResponseDto customerResponseDto = customerMapper.mapToCustomerDto(customer);
+        AccountResponseDto accountResponseDto = accountsMapper.mapToAccountDto(account);
+        customerResponseDto.setAccount(accountResponseDto);               
+        return customerResponseDto;
+       }
 
 }
