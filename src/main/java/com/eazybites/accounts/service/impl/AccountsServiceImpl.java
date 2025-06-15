@@ -9,7 +9,9 @@ import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
 import com.eazybites.accounts.exception.error.ResourceNotFoundException;
 import com.eazybites.accounts.mapper.AccountsMapper;
 import com.eazybites.accounts.mapper.CustomerMapper;
-import com.eazybites.accounts.model.dto.request.CustomerRequestDto;
+import com.eazybites.accounts.model.dto.request.AccountsRequestDto;
+import com.eazybites.accounts.model.dto.request.CustomerAccountUpdateRequestDto;
+import com.eazybites.accounts.model.dto.request.CustomerCreateRequestDto;
 import com.eazybites.accounts.model.dto.response.AccountResponseDto;
 import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
 import com.eazybites.accounts.model.entity.Accounts;
@@ -39,7 +41,7 @@ public class AccountsServiceImpl implements IAccountsService {
      *                                         with the given mobileNumber
      */
     @Override
-    public void createAccount(CustomerRequestDto customerDto) {
+    public void createAccount(CustomerCreateRequestDto customerDto) {
         Customer customer = customerMapper.mapToCustomer(customerDto);
         boolean existsMobile = customerRepository.existsByMobileNumber(customer.getMobileNumber());
 
@@ -91,5 +93,19 @@ public class AccountsServiceImpl implements IAccountsService {
         customerResponseDto.setAccount(accountResponseDto);               
         return customerResponseDto;
        }
+
+        @Override
+        public void updateAccount(CustomerAccountUpdateRequestDto customerDetails) {
+            Customer customer = customerRepository.findById(customerDetails.getCustomerId())
+                    .orElseThrow(()-> new ResourceNotFoundException("Customer","id ", String.valueOf(customerDetails.getCustomerId())));
+            Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId())
+                    .orElseThrow(()-> new ResourceNotFoundException("Account","customer id ", String.valueOf(customer.getCustomerId())));
+            
+           accountsMapper.updateAccountFromDto(customerDetails.getAccount(), accounts);
+           customerMapper.updateCustomerFromDto(customerDetails, customer);
+            
+            customerRepository.save(customer);
+            accountsRepository.save(accounts);
+        }
 
 }

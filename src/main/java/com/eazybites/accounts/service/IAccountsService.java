@@ -1,6 +1,7 @@
 package com.eazybites.accounts.service;
 
-import com.eazybites.accounts.model.dto.request.CustomerRequestDto;
+import com.eazybites.accounts.model.dto.request.CustomerAccountUpdateRequestDto;
+import com.eazybites.accounts.model.dto.request.CustomerCreateRequestDto;
 import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
 
 public interface IAccountsService {
@@ -8,7 +9,7 @@ public interface IAccountsService {
   * 
   * @param customerDto - CustomerDto Object
   */
- void createAccount(CustomerRequestDto customerDto);
+ void createAccount(CustomerCreateRequestDto customerDto);
 
  /**
   * 
@@ -17,4 +18,6 @@ public interface IAccountsService {
   */
 
  CustomerResponseDto fetchAccount(String mobileNumber);
+
+ void updateAccount(CustomerAccountUpdateRequestDto customerDetails);
 }
