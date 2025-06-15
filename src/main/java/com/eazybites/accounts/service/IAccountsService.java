@@ -19,5 +19,18 @@ public interface IAccountsService {
 
  CustomerResponseDto fetchAccount(String mobileNumber);
 
+ /**
+  * 
+  * @param customerDetails - CustomerAccountUpdateRequestDto Object
+  * Updates the customer and account details
+  */
  void updateAccount(CustomerAccountUpdateRequestDto customerDetails);
+
+ /**
+  * 
+  * @param mobileNumber - Input mobileNumber
+  * Deletes the account for the given mobileNumber
+  */
+ void deleteAccount(String mobileNumber);
+
 }
