@@ -16,6 +16,18 @@ import com.eazybites.accounts.exception.error.ResourceNotFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public BaseErrorResponse handlerGlobalException(Exception exception, WebRequest webRequest) {
+        return ErrorResponse.builder()
+            .apiPath(webRequest.getDescription(false))
+            .status(HttpStatus.INTERNAL_SERVER_ERROR.name())
+            .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+            .errorTime(LocalDateTime.now())
+            .message(exception.getMessage())
+            .build();
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CustomerAlreadyExistsException.class)
     public BaseErrorResponse handlerCustomerMobileNumberExists(CustomerAlreadyExistsException exception, WebRequest webRequest) {
