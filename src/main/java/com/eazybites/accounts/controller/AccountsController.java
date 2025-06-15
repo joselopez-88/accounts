@@ -3,6 +3,7 @@ package com.eazybites.accounts.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,15 @@ public class AccountsController {
      @PatchMapping("/update")
     public ResponseEntity<ResponseDto> updateAccount(@RequestBody CustomerAccountUpdateRequestDto customerDetails) {
         accountsService.updateAccount(customerDetails);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(
+                new ResponseDto(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK.value(), AccountsConstants.MESSAGE_200)
+            );
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteAccount(@RequestParam String mobileNumber){
+        accountsService.deleteAccount(mobileNumber);
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(
