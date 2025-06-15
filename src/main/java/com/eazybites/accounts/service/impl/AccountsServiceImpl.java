@@ -9,7 +9,6 @@ import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
 import com.eazybites.accounts.exception.error.ResourceNotFoundException;
 import com.eazybites.accounts.mapper.AccountsMapper;
 import com.eazybites.accounts.mapper.CustomerMapper;
-import com.eazybites.accounts.model.dto.request.AccountsRequestDto;
 import com.eazybites.accounts.model.dto.request.CustomerAccountUpdateRequestDto;
 import com.eazybites.accounts.model.dto.request.CustomerCreateRequestDto;
 import com.eazybites.accounts.model.dto.response.AccountResponseDto;
