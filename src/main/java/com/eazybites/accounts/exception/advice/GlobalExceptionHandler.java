@@ -18,11 +18,21 @@ import com.eazybites.accounts.exception.dto.ErrorsResponse;
 import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
 import com.eazybites.accounts.exception.error.ResourceNotFoundException;
 
+// import io.swagger.v3.oas.annotations.Operation;
+// import io.swagger.v3.oas.annotations.media.Content;
+// import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // @Operation(summary = "Handle Generic Exception")
+    // @ApiResponse(
+    // responseCode = "500",
+    // description = "Internal Server Error",
+    // content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+    // )
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public BaseErrorResponse handlerGlobalException(Exception exception, WebRequest webRequest) {
@@ -35,6 +45,12 @@ public class GlobalExceptionHandler {
             .build();
     }
 
+    // @Operation(summary = "Handle Customer Already Exists Exception")
+    // @ApiResponse(
+    // responseCode = "400",
+    // description = "Bad Request",
+    // content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+    // )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CustomerAlreadyExistsException.class)
     public BaseErrorResponse handlerCustomerMobileNumberExists(CustomerAlreadyExistsException exception, WebRequest webRequest) {
@@ -47,6 +63,12 @@ public class GlobalExceptionHandler {
             .build();
     }
 
+    // @Operation(summary = "Handle Resource Not Found Exception")
+    // @ApiResponse(
+    // responseCode = "404",
+    // description = "Not Found",
+    // content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+    // )
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public BaseErrorResponse handlerResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest) {
@@ -70,6 +92,12 @@ public class GlobalExceptionHandler {
  * @param webRequest the web request during which the exception occurred
  * @return an ErrorsResponse object with detailed error information
  */
+    // @Operation(summary = "Handle Method Argument Not Valid Exception")
+    // @ApiResponse(
+    //     responseCode = "400",
+    //     description = "Bad Request",
+    //     content = @Content(schema = @Schema(implementation = ErrorsResponse.class))
+    // )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public BaseErrorResponse handlerMalFormedRequest(MethodArgumentNotValidException exception, WebRequest webRequest) {
@@ -97,10 +125,15 @@ public class GlobalExceptionHandler {
      * @param webRequest the web request during which the exception occurred
      * @return an ErrorResponse object with detailed error information
      */
+    // @Operation(summary = "Handle Method Argument Type Mismatch Exception")
+    // @ApiResponse(
+    //     responseCode = "400",
+    //     description = "Bad Request",
+    //     content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+    // )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public BaseErrorResponse handleTypeMismatch(MethodArgumentTypeMismatchException exception, WebRequest webRequest) {
-    
             return ErrorResponse.builder()
             .apiPath(webRequest.getDescription(false))
             .status(HttpStatus.BAD_REQUEST.name())            
@@ -120,6 +153,12 @@ public class GlobalExceptionHandler {
      * @param webRequest the web request during which the exception occurred
      * @return an ErrorResponse object with detailed error information
      */
+    // @Operation(summary = "Handle Constraint Violation Exception")
+    // @ApiResponse(
+    //     responseCode = "400",
+    //     description = "Bad Request",
+    //     content = @Content(schema = @Schema(implementation = ErrorsResponse.class))
+    // )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public BaseErrorResponse handlerPathAndRequestParam(ConstraintViolationException exception, WebRequest webRequest) {
