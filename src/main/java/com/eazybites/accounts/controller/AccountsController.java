@@ -20,30 +20,30 @@ import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
 import com.eazybites.accounts.model.dto.response.ResponseDto;
 import com.eazybites.accounts.service.IAccountsService;
 
-// import io.swagger.v3.oas.annotations.Operation;
-// import io.swagger.v3.oas.annotations.responses.ApiResponse;
-// import io.swagger.v3.oas.annotations.responses.ApiResponses;
-// import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
-// @Tag(
-//     name = "Accounts",
-//     description = "CRUD Rest API for Accounts in EazyBank to Create, Fetch, Update and Delete account details"
-// )
+@Tag(
+    name = "Accounts",
+    description = "CRUD Rest API for Accounts in EazyBank to Create, Fetch, Update and Delete account details"
+)
 @RestController
-@RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path="/api/accounts", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 @Validated // Active the validation in all method parameters in the controller
 public class AccountsController {
 
     private final IAccountsService accountsService;
 
-    // @Operation(
-    //     summary = "Create Account Rest Api",
-    //     description = "Create a new customer and account in EazyBank"
-    // )
-    // @ApiResponse(responseCode = "201", description = "Created")
+    @Operation(
+        summary = "Create Account Rest Api",
+        description = "Create a new customer and account in EazyBank"
+    )
+    @ApiResponse(responseCode = "201", description = "Created")
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerCreateRequestDto customerDto) {
         accountsService.createAccount(customerDto);
@@ -53,20 +53,20 @@ public class AccountsController {
                 new ResponseDto(HttpStatus.CREATED.getReasonPhrase(), HttpStatus.CREATED.value(), AccountsConstants.MESSAGE_201)
             );
     }
-    // @Operation(
-    //     summary = "Fetch Account Rest Api",
-    //     description = "Fetch Customer and Account details in EazyBank"
-    // )
-    // @ApiResponse(responseCode = "200", description = "OK")
+    @Operation(
+        summary = "Fetch Account Rest Api",
+        description = "Fetch Customer and Account details in EazyBank"
+    )
+    @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping("/fetch")
     public ResponseEntity<CustomerResponseDto> fetchAccountDetails(@RequestParam @Pattern(regexp = "(^[0-9]{10}$)", message = " The mobile number must be 10 digits.") String mobileNumber) {
         return ResponseEntity.ok().body(accountsService.fetchAccount(mobileNumber));
     }
 
-    // @Operation(
-    //     summary = "Update Account Rest Api",
-    //     description = "Update Customer and Account details in EazyBank"
-    // )
+    @Operation(
+        summary = "Update Account Rest Api",
+        description = "Update Customer and Account details in EazyBank"
+    )
     // @ApiResponses(
     //     value = {
     //         @ApiResponse(responseCode = "200", description = "OK"),
@@ -84,10 +84,10 @@ public class AccountsController {
                 new ResponseDto(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK.value(), AccountsConstants.MESSAGE_200)
             );
     }
-    // @Operation(
-    //     summary = "Delete Account Rest Api",
-    //     description = "Delete Customer and Account details in EazyBank"
-    // )
+    @Operation(
+        summary = "Delete Account Rest Api",
+        description = "Delete Customer and Account details in EazyBank"
+    )
     // @ApiResponses(
     //     value = {
     //         @ApiResponse(responseCode = "200", description = "OK"),
