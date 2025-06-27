@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -20,7 +19,6 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 public class Customer extends BaseAuditableEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

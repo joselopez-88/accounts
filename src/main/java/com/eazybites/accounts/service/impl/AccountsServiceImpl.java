@@ -45,8 +45,7 @@ public class AccountsServiceImpl implements IAccountsService {
         boolean existsMobile = customerRepository.existsByMobileNumber(customer.getMobileNumber());
 
         if(existsMobile){
-            throw new CustomerAlreadyExistsException("Customer already registered with given mobileNumber "
-                    +customerDto.getMobileNumber());
+            throw new CustomerAlreadyExistsException(customerDto.getMobileNumber());
         }
 
         Customer savedCustomer = customerRepository.save(customer);
@@ -59,13 +58,13 @@ public class AccountsServiceImpl implements IAccountsService {
      */
     private Accounts createNewAccount(Customer customer) {
         long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
-        return Accounts.builder()
-        .customerId(customer.getCustomerId())
-        .accountNumber(randomAccNumber)
-        .accountType(AccountsConstants.SAVINGS)
-        .branchAddress(AccountsConstants.ADDRESS)
-        .build();
-        
+        Accounts account = new Accounts();
+        account.setCustomerId(customer.getCustomerId());
+        account.setAccountNumber(randomAccNumber);
+        account.setAccountType(AccountsConstants.SAVINGS);
+        account.setBranchAddress(AccountsConstants.ADDRESS);
+
+        return account;        
     }
 
         /**

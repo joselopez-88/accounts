@@ -15,15 +15,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 @MappedSuperclass// Esto indica que la clase BaseEntity será una superclase para otras entidades
 @Getter
 @Setter
 @ToString
-@SuperBuilder
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class BaseAuditableEntity {
+public abstract class BaseAuditableEntity {
     @Column(updatable = false)//Indica que el dato no se guarda en un update, solo en el insert
     @CreatedDate // Anotaciones necesarias para la auditoría
     private LocalDateTime createdAt;

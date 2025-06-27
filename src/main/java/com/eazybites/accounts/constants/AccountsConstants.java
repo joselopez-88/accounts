@@ -1,6 +1,6 @@
 package com.eazybites.accounts.constants;
 
-public class AccountsConstants {
+public final class AccountsConstants {
     private AccountsConstants() {
     }
 

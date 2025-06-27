@@ -53,19 +53,19 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ApiError handlerGlobalException(Exception exception, WebRequest webRequest) {
-        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.name(), HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
+        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CustomerAlreadyExistsException.class)
     public ApiError handlerCustomerMobileNumberExists(CustomerAlreadyExistsException exception, WebRequest webRequest) {
-        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.BAD_REQUEST.name(), HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ApiError handlerResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest) {
-        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.NOT_FOUND.name(), HttpStatus.NOT_FOUND.value(), exception.getMessage());
+        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
      
@@ -76,14 +76,14 @@ public class GlobalExceptionHandler {
         exception.getBindingResult().getFieldErrors()
                 .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
      
-        return ApiError.createWithDetails(webRequest.getDescription(false), HttpStatus.BAD_REQUEST.name(), HttpStatus.BAD_REQUEST.value(), errors);
+        return ApiError.createWithDetails(webRequest.getDescription(false), HttpStatus.BAD_REQUEST, errors);
     }
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ApiError handleTypeMismatch(MethodArgumentTypeMismatchException exception, WebRequest webRequest) {
-        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.BAD_REQUEST.name(), HttpStatus.BAD_REQUEST.value(), exception.getMessage()); 
+        return ApiError.createWithMessage(webRequest.getDescription(false), HttpStatus.BAD_REQUEST, exception.getMessage()); 
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
@@ -95,6 +95,6 @@ public class GlobalExceptionHandler {
             String fieldName = path.substring(path.lastIndexOf('.') + 1);
             errors.put(fieldName, violation.getMessage());
         });
-            return ApiError.createWithDetails(webRequest.getDescription(false), HttpStatus.BAD_REQUEST.name(), HttpStatus.BAD_REQUEST.value(), errors);  
+            return ApiError.createWithDetails(webRequest.getDescription(false), HttpStatus.BAD_REQUEST, errors);  
     }
 }
