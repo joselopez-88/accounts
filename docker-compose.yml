@@ -1,0 +1,43 @@
+services:
+  accounts:
+    image: "albertoesteva88/accounts:s4"
+    container_name: "accounts-ms"
+    ports:
+      - "8080:8080"
+    # Util en docker swarm, pero estamos con docker compose  
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: "700m"
+    mem_limit: 700m
+    networks:
+      - eazybank
+  loans:
+    image: "albertoesteva88/loans:s4"
+    container_name: "loans-ms"
+    ports:
+      - "8090:8090"
+    # Util en docker swarm, pero estamos con docker compose  
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: "700m"
+    mem_limit: 700m    
+    networks:
+      - eazybank          
+  cards:
+    image: "albertoesteva88/cards:s4"
+    container_name: "cards-ms"
+    ports:
+      - "9000:9000"
+    # Util en docker swarm, pero estamos con docker compose  
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: "700m"
+    mem_limit: 700m
+    networks:
+      - eazybank
+networks:
+  eazybank:
+    driver: "bridge"
