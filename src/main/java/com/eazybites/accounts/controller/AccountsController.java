@@ -1,5 +1,6 @@
 package com.eazybites.accounts.controller;
 
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,6 +42,8 @@ public class AccountsController {
 
     @Value("${build.version}")
     private String buildVersion;
+
+    private final Environment environment;
 
     @Operation(
         summary = "Create Account Rest Api",
@@ -117,5 +120,16 @@ public class AccountsController {
     @GetMapping("/build-info")
     public ResponseEntity<String> getBuildVersion(){
         return ResponseEntity.ok().body(buildVersion);
+    }
+
+
+    @Operation(
+      summary = "Get Java Home Rest Api",
+      description = "Get Java Home details in EazyBank"
+    )
+    @ApiResponse(responseCode = "200", description = "OK")
+    @GetMapping("/java-home")
+    public ResponseEntity<String> getJavaHome(){
+        return ResponseEntity.ok().body(environment.getProperty("JAVA_HOME"));
     }
 }
