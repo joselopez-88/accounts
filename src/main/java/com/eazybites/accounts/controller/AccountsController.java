@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eazybites.accounts.constants.AccountsConstants;
+import com.eazybites.accounts.model.dto.AccountsContactInfoDto;
 import com.eazybites.accounts.model.dto.request.CustomerAccountUpdateRequestDto;
 import com.eazybites.accounts.model.dto.request.CustomerCreateRequestDto;
 import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
@@ -37,6 +38,8 @@ import lombok.RequiredArgsConstructor;
 public class AccountsController {
 
     private final IAccountsService accountsService;
+
+    private final AccountsContactInfoDto contactInfo;
 
     @Operation(
         summary = "Create Account Rest Api",
@@ -103,5 +106,16 @@ public class AccountsController {
             .body(
                 new ResponseDto(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK.value(), AccountsConstants.MESSAGE_200)
             );
+    }
+
+
+    @Operation(
+        summary = "Get Contact Info Rest Api",
+        description = "Get Contact Info Details that can be reached out in case of any issue"
+    )
+    @ApiResponse(responseCode = "200", description = "OK")
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
+        return ResponseEntity.ok().body(contactInfo);
     }
 }

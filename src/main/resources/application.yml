@@ -15,4 +15,12 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true        
+    show-sql: true
+accounts:
+  message: "Welcome to EazyBank accounts related local APIs"
+  contactDetails:
+    name: "Jose Alberto"
+    email: "alberto.esteva88@gmail.com"
+  onCallSupport:
+    - "(971)123-4567"
+    - "(971)123-5678"
