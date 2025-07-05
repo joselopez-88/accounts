@@ -15,4 +15,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true        
+    show-sql: true
+build:
+  version: "1.0"    

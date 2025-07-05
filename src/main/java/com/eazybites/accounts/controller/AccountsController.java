@@ -1,5 +1,6 @@
 package com.eazybites.accounts.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,9 @@ import lombok.RequiredArgsConstructor;
 public class AccountsController {
 
     private final IAccountsService accountsService;
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @Operation(
         summary = "Create Account Rest Api",
@@ -103,5 +107,15 @@ public class AccountsController {
             .body(
                 new ResponseDto(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK.value(), AccountsConstants.MESSAGE_200)
             );
+    }
+
+    @Operation(
+        summary = "Get Build Version Rest Api",
+        description = "Get Build Version details in EazyBank"
+    )
+    @ApiResponse(responseCode = "200", description = "OK")
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildVersion(){
+        return ResponseEntity.ok().body(buildVersion);
     }
 }
