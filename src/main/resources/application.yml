@@ -18,4 +18,7 @@ spring:
     show-sql: true
   profiles:
     active:
-    - prod  
+    - prod
+  config:
+    import:
+    - "optional:configserver:http://localhost:8071/"
