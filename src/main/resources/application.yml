@@ -5,9 +5,9 @@ spring:
     name: accounts
   datasource:
     url: jdbc:mysql://localhost:3306/accountsdb
-    #driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
 #    database-platform: org.hibernate.dialect.MySQLDialect
 #    hibernate:
@@ -22,7 +22,8 @@ spring:
     - "prod"
   config:
     import:
-    - "configserver:http://localhost:8071/"
+    # - "configserver:http://localhost:8071/"
+    - "configserver:http://configserver:8071/"
 management:
   endpoints:
     web:
