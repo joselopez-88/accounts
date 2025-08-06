@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
     description = "CRUD Rest API for Accounts in EazyBank to Create, Fetch, Update and Delete account details"
 )
 @RestController
-@RequestMapping(path="/api/accounts", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 @Validated // Active the validation in all method parameters in the controller
 public class AccountsController {
