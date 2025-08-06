@@ -11,6 +11,6 @@ import com.eazybites.accounts.model.dto.client.LoansResponseDto;
 @FeignClient("loans")
 public interface LoansFeignClient {
 
-    @GetMapping(value = "/api/loans/fetch", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/fetch", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoansResponseDto> fetchLoan(@RequestParam String mobileNumber);
 }
