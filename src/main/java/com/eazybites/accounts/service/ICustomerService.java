@@ -4,5 +4,5 @@ import com.eazybites.accounts.model.dto.response.CustomerDetailsDto;
 
 public interface ICustomerService {
 
-    CustomerDetailsDto fetchCustomerDetails(String mobileNumber);
+    CustomerDetailsDto fetchCustomerDetails(String mobileNumber, String correlationId);
 }

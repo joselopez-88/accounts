@@ -58,3 +58,9 @@ info:
     name: "accounts"
     description: "EazyBank Accounts Application"
     version: "1.0.0"
+#Estableciendo la configuracion de logging DEBUG en el paquete com.eazybites.accounts del proyecto
+logging:
+  level:
+    com:
+      eazybites:
+        accounts: DEBUG
