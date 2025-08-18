@@ -9,7 +9,6 @@ public class CardsFallBack implements CardsFeignClient{
 
     @Override
     public ResponseEntity<CardsResponseDto> fetchCardDetails(String correlationId, String mobileNumber) {
-    //    return ResponseEntity.ok(new CardsResponseDto());
         return null;
     }
 

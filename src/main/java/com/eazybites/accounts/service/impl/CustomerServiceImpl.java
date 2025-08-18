@@ -1,5 +1,8 @@
 package com.eazybites.accounts.service.impl;
 
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.eazybites.accounts.exception.error.ResourceNotFoundException;
@@ -46,9 +49,12 @@ public class CustomerServiceImpl implements ICustomerService {
         AccountResponseDto accountResponseDto = accountsMapper.mapToAccountDto(account);
         customerResponseDto.setAccount(accountResponseDto);       
         
-        CardsResponseDto cardsResponseDto = cardsFeignClient.fetchCardDetails(correlationId,mobileNumber).getBody();
-        LoansResponseDto loansResponseDto = loansFeignClient.fetchLoan(correlationId, mobileNumber).getBody();
-        
+        Optional<ResponseEntity<CardsResponseDto>> optCardsResponseDto = Optional.ofNullable(cardsFeignClient.fetchCardDetails(correlationId,mobileNumber));
+        Optional<ResponseEntity<LoansResponseDto>> optLoansResponseDto = Optional.ofNullable(loansFeignClient.fetchLoan(correlationId, mobileNumber));
+
+        CardsResponseDto cardsResponseDto = optCardsResponseDto.map(ResponseEntity::getBody).orElse(null);
+        LoansResponseDto loansResponseDto = optLoansResponseDto.map(ResponseEntity::getBody).orElse(null);
+
         CustomerDetailsDto customerDetailsDto = new CustomerDetailsDto();
         customerDetailsDto.setCustomer(customerResponseDto);
         customerDetailsDto.setCards(cardsResponseDto);

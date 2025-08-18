@@ -9,7 +9,6 @@ public class LoansFallBack implements LoansFeignClient {
 
     @Override
     public ResponseEntity<LoansResponseDto> fetchLoan(String correlationId, String mobileNumber) {
-        // return ResponseEntity.ok(new LoansResponseDto());
         return null;
     }
 
