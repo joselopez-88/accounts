@@ -26,6 +26,11 @@ spring:
   config:
     import:
     - "optional:configserver:http://localhost:8071/"
+#Activando el uso de resilience4j para feign
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true    
 # Configuracion de actuator
 management:
   endpoints:
@@ -35,6 +40,9 @@ management:
         - health
         - info
         - shutdown
+        - metrics
+        - circuitbreakers
+        - circuitbreakerevents        
 # Activando la comprobacion de estado del microservicio
   health:
     readinessstate:
@@ -73,3 +81,13 @@ logging:
     com:
       eazybites:
         accounts: DEBUG
+#Configuracion de resilience4j
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10 # Monitoreando los ultimos 10 request para calcular el porcentaje de fallos.
+        minimumNumberOfCalls: 5 # número mínimo de llamadas que deben existir en la ventana antes de calcular el ratio de fallos (de los mencionados en slidingWindowSize )  
+        permittedNumberOfCallsInHalfOpenState: 2 # cuántas llamadas de prueba se permiten en HALF_OPEN state
+        failureRateThreshold: 50 # umbral de porcentaje de fallos que dispara la apertura de circuito abierto
+        waitDurationInOpenState: 10000 # tiempo que el CB permanece OPEN antes de permitir pruebas. (en milisegundos)        
