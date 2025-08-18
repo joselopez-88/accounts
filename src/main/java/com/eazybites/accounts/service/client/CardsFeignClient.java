@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.eazybites.accounts.model.dto.client.CardsResponseDto;
 
-@FeignClient("cards")
+@FeignClient(name = "cards", fallback = CardsFallBack.class)
 public interface CardsFeignClient {
 
     @GetMapping(value = "/api/fetch", produces = MediaType.APPLICATION_JSON_VALUE)
