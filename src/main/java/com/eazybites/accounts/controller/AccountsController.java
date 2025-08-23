@@ -1,6 +1,9 @@
 package com.eazybites.accounts.controller;
 
 import org.springframework.core.env.Environment;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +26,7 @@ import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
 import com.eazybites.accounts.model.dto.response.ResponseDto;
 import com.eazybites.accounts.service.IAccountsService;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,6 +44,9 @@ import lombok.RequiredArgsConstructor;
 public class AccountsController {
 
     private final IAccountsService accountsService;
+
+        private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
+
 
     @Value("${build.version}")
     private String buildVersion;
@@ -120,11 +127,19 @@ public class AccountsController {
         description = "Get Build Version details in EazyBank"
     )
     @ApiResponse(responseCode = "200", description = "OK")
+    @Retry(name = "getBuildVersion", fallbackMethod = "getBuildVersionFallback")
     @GetMapping("/build-info")
     public ResponseEntity<String> getBuildVersion(){
-        return ResponseEntity.ok().body(buildVersion);
+        logger.debug("getBuildVersion() method Invoked");
+        throw new NullPointerException();        
+        // return ResponseEntity.ok().body(buildVersion);
     }
 
+    public ResponseEntity<String> getBuildVersionFallback(Throwable throwable){
+        logger.debug("getBuildVersionFallback() method Invoked");
+         return ResponseEntity.ok().body("0.9");
+    
+    }
 
     @Operation(
       summary = "Get Java Home Rest Api",
