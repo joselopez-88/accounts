@@ -2,7 +2,6 @@ package com.eazybites.accounts.controller;
 
 import org.springframework.core.env.Environment;
 
-import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,10 +130,9 @@ public class AccountsController {
     @ApiResponse(responseCode = "200", description = "OK")
     @Retry(name = "getBuildVersion", fallbackMethod = "getBuildVersionFallback")
     @GetMapping("/build-info")
-    public ResponseEntity<String> getBuildVersion()throws TimeoutException {
+    public ResponseEntity<String> getBuildVersion() {
         logger.debug("getBuildVersion() method Invoked");
-        throw new TimeoutException();        
-        // return ResponseEntity.ok().body(buildVersion);
+        return ResponseEntity.ok().body(buildVersion);
     }
 
     public ResponseEntity<String> getBuildVersionFallback(Throwable throwable){
