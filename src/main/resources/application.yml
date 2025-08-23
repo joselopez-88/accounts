@@ -95,7 +95,7 @@ resilience4j:
   retry:
     configs:
       default:
-        maxAttempts: 3
-        waitDuration: 100
-        enableExponentialBackoff: true
-        exponentialBackoffMultiplier: 2
+        maxAttempts: 3 # Numero maximo de intentos
+        waitDuration: 500 #  representa el initialDelay : Tiempo de espera base entre intentos
+        enableExponentialBackoff: true # aleatoriedad en el backoff: Si está en true, introduce una variación aleatoria en los tiempos
+        exponentialBackoffMultiplier: 2 # multiplicador exponencial: delay(n) = initialDelay × (multiplicador ^ (n-1)) n= numero de reintento (para calcular el retraso en el intento)
