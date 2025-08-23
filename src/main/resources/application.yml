@@ -91,3 +91,11 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 2 # cuántas llamadas de prueba se permiten en HALF_OPEN state
         failureRateThreshold: 50 # umbral de porcentaje de fallos que dispara la apertura de circuito abierto
         waitDurationInOpenState: 10000 # tiempo que el CB permanece OPEN antes de permitir pruebas. (en milisegundos)        
+# Configuracion Retry Pattern
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 100
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
