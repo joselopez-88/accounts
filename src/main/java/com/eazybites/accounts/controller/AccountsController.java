@@ -27,6 +27,7 @@ import com.eazybites.accounts.model.dto.response.CustomerResponseDto;
 import com.eazybites.accounts.model.dto.response.ResponseDto;
 import com.eazybites.accounts.service.IAccountsService;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -146,11 +147,17 @@ public class AccountsController {
       description = "Get Java Home details in EazyBank"
     )
     @ApiResponse(responseCode = "200", description = "OK")
+    @RateLimiter(name = "getJavaHome", fallbackMethod = "getJavaHomeFallback")
     @GetMapping("/java-home")
     public ResponseEntity<String> getJavaHome(){
+        logger.debug("getJavaHome() method Invoked");
         return ResponseEntity.ok().body(environment.getProperty("JAVA_HOME"));
     }
 
+    public ResponseEntity<String> getJavaHomeFallback(Throwable throwable){
+        logger.debug("getJavaHomeFallback() method Invoked");
+        return ResponseEntity.ok().body("/usr/lib/jvm/jdk-17.0.2");
+    }
 
     @Operation(
         summary = "Get Contact Info Rest Api",
