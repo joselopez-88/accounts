@@ -104,3 +104,10 @@ resilience4j:
         # Cuando se define retryExceptions, indica que las excepciones no indicadas se deben ignorar, haciendo innecesario el uso de ignoreExceptions
         retryExceptions:
           - java.util.concurrent.TimeoutException
+# Configuracion RateLimiter
+  ratelimiter:
+    configs:
+      default:
+        limitRefreshPeriod: 5000 # defines la “ventana de tiempo”: Cada cuánto tiempo se renuevan los permisos (en milisegundos)
+        limitForPeriod: 1 # defines cuántos requests caben en esa ventana: Cuántos permisos se pueden consumir en cada periodo
+        timeoutDuration: 1000 # defines qué hacer si la ventana ya está saturada: Tiempo máximo de espera (en milisegundos) si no hay permisos disponibles
