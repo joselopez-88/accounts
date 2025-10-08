@@ -2,6 +2,9 @@ package com.eazybites.accounts.service.impl;
 
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import com.eazybites.accounts.constants.AccountsConstants;
@@ -9,6 +12,7 @@ import com.eazybites.accounts.exception.error.CustomerAlreadyExistsException;
 import com.eazybites.accounts.exception.error.ResourceNotFoundException;
 import com.eazybites.accounts.mapper.AccountsMapper;
 import com.eazybites.accounts.mapper.CustomerMapper;
+import com.eazybites.accounts.model.dto.message.AccountsMsgDto;
 import com.eazybites.accounts.model.dto.request.CustomerAccountUpdateRequestDto;
 import com.eazybites.accounts.model.dto.request.CustomerCreateRequestDto;
 import com.eazybites.accounts.model.dto.response.AccountResponseDto;
@@ -25,10 +29,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountsServiceImpl implements IAccountsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountsServiceImpl.class);
+    
     private final AccountsRepository accountsRepository;
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final AccountsMapper accountsMapper;
+
+    private final StreamBridge streamBridge;
 
     
     /**
@@ -49,7 +57,8 @@ public class AccountsServiceImpl implements IAccountsService {
         }
 
         Customer savedCustomer = customerRepository.save(customer);
-        accountsRepository.save(createNewAccount(savedCustomer));
+        Accounts savedAccount = accountsRepository.save(createNewAccount(savedCustomer));
+        sendCommunication(savedAccount, savedCustomer);
     }
 
        /**
@@ -112,6 +121,14 @@ public class AccountsServiceImpl implements IAccountsService {
                     .orElseThrow(()-> new ResourceNotFoundException("Customer","mobileNumber ", mobileNumber));
             accountsRepository.deleteByCustomerId(customer.getCustomerId());
             customerRepository.deleteById(customer.getCustomerId());
+        }
+
+        private void sendCommunication(Accounts account, Customer customer){
+            var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(), customer.getEmail(), customer.getMobileNumber());
+            logger.info("Sending communication request for the details: {}", accountsMsgDto);
+            var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
+            logger.info("Is the communication request successfuy processed: {}", result);
+
         }
 
 }
