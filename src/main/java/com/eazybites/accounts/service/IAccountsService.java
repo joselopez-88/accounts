@@ -33,4 +33,10 @@ public interface IAccountsService {
   */
  void deleteAccount(String mobileNumber);
 
+ /**
+ * @param accountNumber - Long
+ * @return boolean indicating if the communication status was updated successfully
+ */
+boolean updateCommunicationStatus(Long accountNumber);
+
 }

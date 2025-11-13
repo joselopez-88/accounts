@@ -29,4 +29,7 @@ public class Accounts extends BaseAuditableEntity {
 
     @Column(name = "customer_id")
     private Long customerId;
+
+    @Column(name = "communication_sw")
+    private Boolean communicationSw;
 }
