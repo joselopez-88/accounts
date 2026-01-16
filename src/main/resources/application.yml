@@ -43,7 +43,7 @@ spring:
       kafka:
         binder:
           brokers:
-          - localhost:9092             
+          - ${SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS:localhost:9092}
 # Configuracion de actuator
 management:
   endpoints:
